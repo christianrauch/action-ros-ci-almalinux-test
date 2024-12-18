@@ -56,3 +56,16 @@ jobs:
           rosdep install --from-paths src --ignore-src -y --rosdistro ${{ matrix.distribution.ros }}
           . /opt/ros/${{ matrix.distribution.ros }}/setup.sh
           colcon build --event-handlers=console_cohesion+
+
+      - name: env (sh)
+        if: always()
+        run: |
+          . /opt/ros/${{ matrix.distribution.ros }}/setup.sh
+          env
+
+      - name: env (bash)
+        if: always()
+        shell: bash
+        run: |
+          source /opt/ros/${{ matrix.distribution.ros }}/setup.bash
+          env
