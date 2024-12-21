@@ -19,10 +19,10 @@ jobs:
       matrix:
         steps: ['action', 'manual']
         distribution: [
-          {image: 'ubuntu:22.04', ros: humble},
-          {image: 'ubuntu:24.04', ros: jazzy},
+          # {image: 'ubuntu:22.04', ros: humble},
+          # {image: 'ubuntu:24.04', ros: jazzy},
           {image: 'almalinux:8', ros: humble},
-          {image: 'almalinux:9', ros: jazzy},
+          # {image: 'almalinux:9', ros: jazzy},
         ]
 
     container:
@@ -35,6 +35,326 @@ jobs:
         run: |
           cat << EOF > sources.repos
           repositories:
+            src/ament/ament_cmake:
+              type: git
+              url: https://github.com/ament/ament_cmake.git
+              version: humble
+            src/ament/ament_index:
+              type: git
+              url: https://github.com/ament/ament_index.git
+              version: humble
+            src/ament/ament_lint:
+              type: git
+              url: https://github.com/ament/ament_lint.git
+              version: humble
+            src/ament/ament_package:
+              type: git
+              url: https://github.com/ament/ament_package.git
+              version: humble
+            src/ament/google_benchmark_vendor:
+              type: git
+              url: https://github.com/ament/google_benchmark_vendor.git
+              version: humble
+            src/ament/googletest:
+              type: git
+              url: https://github.com/ament/googletest.git
+              version: humble
+            src/ament/uncrustify_vendor:
+              type: git
+              url: https://github.com/ament/uncrustify_vendor.git
+              version: humble
+            src/eProsima/Fast-CDR:
+              type: git
+              url: https://github.com/eProsima/Fast-CDR.git
+              version: v1.0.24
+            src/eProsima/Fast-DDS:
+              type: git
+              url: https://github.com/eProsima/Fast-DDS.git
+              version: 2.6.x
+            src/eProsima/foonathan_memory_vendor:
+              type: git
+              url: https://github.com/eProsima/foonathan_memory_vendor.git
+              version: master
+            src/eclipse-cyclonedds/cyclonedds:
+              type: git
+              url: https://github.com/eclipse-cyclonedds/cyclonedds.git
+              version: releases/0.10.x
+            src/eclipse-iceoryx/iceoryx:
+              type: git
+              url: https://github.com/eclipse-iceoryx/iceoryx.git
+              version: release_2.0
+            src/ignition/ignition_cmake2_vendor:
+              type: git
+              url: https://github.com/ignition-release/ignition_cmake2_vendor.git
+              version: humble
+            src/ignition/ignition_math6_vendor:
+              type: git
+              url: https://github.com/ignition-release/ignition_math6_vendor.git
+              version: humble
+            src/osrf/osrf_pycommon:
+              type: git
+              url: https://github.com/osrf/osrf_pycommon.git
+              version: master
+            src/osrf/osrf_testing_tools_cpp:
+              type: git
+              url: https://github.com/osrf/osrf_testing_tools_cpp.git
+              version: humble
+            src/ros-perception/image_common:
+              type: git
+              url: https://github.com/ros-perception/image_common.git
+              version: humble
+            src/ros/class_loader:
+              type: git
+              url: https://github.com/ros/class_loader.git
+              version: humble
+            src/ros/kdl_parser:
+              type: git
+              url: https://github.com/ros/kdl_parser.git
+              version: humble
+            src/ros/pluginlib:
+              type: git
+              url: https://github.com/ros/pluginlib.git
+              version: humble
+            src/ros/resource_retriever:
+              type: git
+              url: https://github.com/ros/resource_retriever.git
+              version: humble
+            src/ros/robot_state_publisher:
+              type: git
+              url: https://github.com/ros/robot_state_publisher.git
+              version: humble
+            src/ros/ros_environment:
+              type: git
+              url: https://github.com/ros/ros_environment.git
+              version: humble
+            src/ros/ros_tutorials:
+              type: git
+              url: https://github.com/ros/ros_tutorials.git
+              version: humble
+            src/ros/urdfdom:
+              type: git
+              url: https://github.com/ros/urdfdom.git
+              version: humble
+            src/ros/urdfdom_headers:
+              type: git
+              url: https://github.com/ros/urdfdom_headers.git
+              version: humble
+            src/ros2/ament_cmake_ros:
+              type: git
+              url: https://github.com/ros2/ament_cmake_ros.git
+              version: humble
+            src/ros2/common_interfaces:
+              type: git
+              url: https://github.com/ros2/common_interfaces.git
+              version: humble
+            src/ros2/console_bridge_vendor:
+              type: git
+              url: https://github.com/ros2/console_bridge_vendor.git
+              version: humble
+            src/ros2/demos:
+              type: git
+              url: https://github.com/ros2/demos.git
+              version: humble
+            src/ros2/eigen3_cmake_module:
+              type: git
+              url: https://github.com/ros2/eigen3_cmake_module.git
+              version: humble
+            src/ros2/example_interfaces:
+              type: git
+              url: https://github.com/ros2/example_interfaces.git
+              version: humble
+            src/ros2/examples:
+              type: git
+              url: https://github.com/ros2/examples.git
+              version: humble
+            src/ros2/geometry2:
+              type: git
+              url: https://github.com/ros2/geometry2.git
+              version: humble
+            src/ros2/launch:
+              type: git
+              url: https://github.com/ros2/launch.git
+              version: humble
+            src/ros2/launch_ros:
+              type: git
+              url: https://github.com/ros2/launch_ros.git
+              version: humble
+            src/ros2/libyaml_vendor:
+              type: git
+              url: https://github.com/ros2/libyaml_vendor.git
+              version: humble
+            src/ros2/message_filters:
+              type: git
+              url: https://github.com/ros2/message_filters.git
+              version: humble
+            src/ros2/mimick_vendor:
+              type: git
+              url: https://github.com/ros2/mimick_vendor.git
+              version: humble
+            src/ros2/orocos_kdl_vendor:
+              type: git
+              url: https://github.com/ros2/orocos_kdl_vendor.git
+              version: humble
+            src/ros2/performance_test_fixture:
+              type: git
+              url: https://github.com/ros2/performance_test_fixture.git
+              version: humble
+            src/ros2/pybind11_vendor:
+              type: git
+              url: https://github.com/ros2/pybind11_vendor.git
+              version: humble
+            src/ros2/python_cmake_module:
+              type: git
+              url: https://github.com/ros2/python_cmake_module.git
+              version: humble
+            src/ros2/rcl:
+              type: git
+              url: https://github.com/ros2/rcl.git
+              version: humble
+            src/ros2/rcl_interfaces:
+              type: git
+              url: https://github.com/ros2/rcl_interfaces.git
+              version: humble
+            src/ros2/rcl_logging:
+              type: git
+              url: https://github.com/ros2/rcl_logging.git
+              version: humble
+            src/ros2/rclcpp:
+              type: git
+              url: https://github.com/ros2/rclcpp.git
+              version: humble
+            src/ros2/rclpy:
+              type: git
+              url: https://github.com/ros2/rclpy.git
+              version: humble
+            src/ros2/rcpputils:
+              type: git
+              url: https://github.com/ros2/rcpputils.git
+              version: humble
+            src/ros2/rcutils:
+              type: git
+              url: https://github.com/ros2/rcutils.git
+              version: humble
+            src/ros2/realtime_support:
+              type: git
+              url: https://github.com/ros2/realtime_support.git
+              version: humble
+            src/ros2/rmw:
+              type: git
+              url: https://github.com/ros2/rmw.git
+              version: humble
+            src/ros2/rmw_connextdds:
+              type: git
+              url: https://github.com/ros2/rmw_connextdds.git
+              version: humble
+            src/ros2/rmw_cyclonedds:
+              type: git
+              url: https://github.com/ros2/rmw_cyclonedds.git
+              version: humble
+            src/ros2/rmw_dds_common:
+              type: git
+              url: https://github.com/ros2/rmw_dds_common.git
+              version: humble
+            src/ros2/rmw_fastrtps:
+              type: git
+              url: https://github.com/ros2/rmw_fastrtps.git
+              version: humble
+            src/ros2/rmw_implementation:
+              type: git
+              url: https://github.com/ros2/rmw_implementation.git
+              version: humble
+            src/ros2/ros2_tracing:
+              type: git
+              url: https://github.com/ros2/ros2_tracing.git
+              version: humble
+            src/ros2/ros2cli:
+              type: git
+              url: https://github.com/ros2/ros2cli.git
+              version: humble
+            src/ros2/ros2cli_common_extensions:
+              type: git
+              url: https://github.com/ros2/ros2cli_common_extensions.git
+              version: humble
+            src/ros2/ros_testing:
+              type: git
+              url: https://github.com/ros2/ros_testing.git
+              version: humble
+            src/ros2/rosbag2:
+              type: git
+              url: https://github.com/ros2/rosbag2.git
+              version: humble
+            src/ros2/rosidl:
+              type: git
+              url: https://github.com/ros2/rosidl.git
+              version: humble
+            src/ros2/rosidl_dds:
+              type: git
+              url: https://github.com/ros2/rosidl_dds.git
+              version: humble
+            src/ros2/rosidl_defaults:
+              type: git
+              url: https://github.com/ros2/rosidl_defaults.git
+              version: humble
+            src/ros2/rosidl_python:
+              type: git
+              url: https://github.com/ros2/rosidl_python.git
+              version: humble
+            src/ros2/rosidl_runtime_py:
+              type: git
+              url: https://github.com/ros2/rosidl_runtime_py.git
+              version: humble
+            src/ros2/rosidl_typesupport:
+              type: git
+              url: https://github.com/ros2/rosidl_typesupport.git
+              version: humble
+            src/ros2/rosidl_typesupport_fastrtps:
+              type: git
+              url: https://github.com/ros2/rosidl_typesupport_fastrtps.git
+              version: humble
+            src/ros2/rpyutils:
+              type: git
+              url: https://github.com/ros2/rpyutils.git
+              version: humble
+            src/ros2/spdlog_vendor:
+              type: git
+              url: https://github.com/ros2/spdlog_vendor.git
+              version: humble
+            src/ros2/sros2:
+              type: git
+              url: https://github.com/ros2/sros2.git
+              version: humble
+            src/ros2/system_tests:
+              type: git
+              url: https://github.com/ros2/system_tests.git
+              version: humble
+            src/ros2/test_interface_files:
+              type: git
+              url: https://github.com/ros2/test_interface_files.git
+              version: humble
+            src/ros2/tinyxml2_vendor:
+              type: git
+              url: https://github.com/ros2/tinyxml2_vendor.git
+              version: humble
+            src/ros2/tinyxml_vendor:
+              type: git
+              url: https://github.com/ros2/tinyxml_vendor.git
+              version: humble
+            src/ros2/tlsf:
+              type: git
+              url: https://github.com/ros2/tlsf.git
+              version: humble
+            src/ros2/unique_identifier_msgs:
+              type: git
+              url: https://github.com/ros2/unique_identifier_msgs.git
+              version: humble
+            src/ros2/urdf:
+              type: git
+              url: https://github.com/ros2/urdf.git
+              version: humble
+            src/ros2/yaml_cpp_vendor:
+              type: git
+              url: https://github.com/ros2/yaml_cpp_vendor.git
+              version: humble
             src/apriltag_ros:
               type: git
               url: https://github.com/christianrauch/apriltag_ros.git
