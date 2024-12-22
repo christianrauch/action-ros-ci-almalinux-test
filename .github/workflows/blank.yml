@@ -352,12 +352,14 @@ jobs:
           no-symlink-install: true
           vcs-repo-file-url: sources.repos
           skip-tests: true
+          rosdep-skip-keys: "asio cyclonedds fastcdr fastrtps python3-babeltrace"
+          extra-cmake-args: "-D THIRDPARTY_Asio=ON"
 
       - name: build (manual)
         if: ${{ matrix.steps == 'manual' }}
         run: |
           rosdep update
           vcs import --input sources.repos
-          rosdep install --from-paths src --ignore-src -y --rosdistro ${{ matrix.distribution.ros }}
+          rosdep install --from-paths src --ignore-src -y --rosdistro ${{ matrix.distribution.ros }} --skip-keys "asio cyclonedds fastcdr fastrtps python3-babeltrace rti-connext-dds-6.0.1"
           . /opt/ros/${{ matrix.distribution.ros }}/setup.sh
-          colcon build --event-handlers=console_cohesion+
+          colcon build --event-handlers=console_cohesion+ --cmake-args "-D THIRDPARTY_Asio=ON"
