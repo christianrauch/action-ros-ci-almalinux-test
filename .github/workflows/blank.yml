@@ -2,14 +2,31 @@ name: CI
 
 on:
   push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
   workflow_dispatch:
 
 jobs:
   build:
-    name: "AlmaLinux 8 / humble"
+    name: "${{ matrix.distribution.image }} / ${{ matrix.distribution.ros }} (${{ matrix.steps }})"
+
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        steps: ['action', 'manual']
+        distribution: [
+          {image: 'ubuntu:22.04', ros: humble},
+          {image: 'ubuntu:24.04', ros: jazzy},
+          {image: 'almalinux:8', ros: humble},
+          {image: 'almalinux:9', ros: jazzy},
+        ]
+
     container:
-      image: almalinux:8
+      image: ${{ matrix.distribution.image }}
 
     steps:
       - uses: ros-tooling/setup-ros@v0.7
@@ -18,14 +35,25 @@ jobs:
         run: |
           cat << EOF > sources.repos
           repositories:
-            src/examples:
+            src/apriltag_ros:
               type: git
-              url: https://github.com/ros2/examples.git
-              version: humble
+              url: https://github.com/christianrauch/apriltag_ros.git
           EOF
 
-      - uses: ros-tooling/action-ros-ci@v0.3
+      - name: build (action)
+        uses: ros-tooling/action-ros-ci@v0.3
+        if: ${{ matrix.steps == 'action' }}
         with:
-          package-name: examples_rclcpp_minimal_publisher
-          target-ros2-distro: humble
+          target-ros2-distro: ${{ matrix.distribution.ros }}
+          no-symlink-install: true
           vcs-repo-file-url: sources.repos
+          skip-tests: true
+
+      - name: build (manual)
+        if: ${{ matrix.steps == 'manual' }}
+        run: |
+          rosdep update
+          vcs import --input sources.repos
+          rosdep install --from-paths src --ignore-src -y --rosdistro ${{ matrix.distribution.ros }}
+          . /opt/ros/${{ matrix.distribution.ros }}/setup.sh
+          colcon build --event-handlers=console_cohesion+
